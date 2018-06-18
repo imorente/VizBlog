@@ -1,0 +1,179 @@
+---
+title: "If Ranked-Choice Voting decided the (second) best Black Mirror Episode"
+author: "Kevin Watanabe-Smith"
+date: '2018-08-13'
+categories: R
+tags:
+- data viz
+- black mirror
+- politics
+- ggalluvial
+best: yes
+---
+
+
+
+<p>On a recent FiveThirtyEight <a href = "https://fivethirtyeight.com/features/politics-podcast-trump-meets-kim/">Politics Podcast</a> the hosts discussed the ranked-choice voting in Maine, and the difficulty of explaining the process to voters. While ranked-choice voting is far from simple, I think part of the complexity comes from the either obscure names of politicians or the arbitrary theoretical examples. If we had a popular example where many people have created a ranked list of options then the explanation of the method might be more tangible.</p>
+<p>My first choice was Star Wars. With every new release, Star Wars fans take to Twitter and other social media to broadcast their ranking of the movie series. However while Star Wars is popular with plenty of published ranked lists, there has also been a consensus that has developed and I suspect any voting method will quickly coalesce around <em>Episode V: The Empire Strikes Back</em> as the favorite. Also everyone is wrong, <em>Return of the Jedi</em> was better. Fight me.</p>
+<div class="figure">
+<img src="/img/searchyourfeelings.gif" />
+
+</div>
+<p>But then <a href = "http://www.businessinsider.com/every-black-mirror-episode-on-netflix-ranked-from-worst-to-best-2018-5">Business Insider</a> came out with a very-belated ranking of Black Mirror episodes and I realized this was the perfect example. While not as popular as Star Wars, Charlie Brooker’s Black Mirror (on Netflix, and before that Channel 4) is composed of 19 distinct, standalone episodes. Viewers are fiercely opinionated, there is no consensus canon, and every list is wrong except this one <strong>link twitter post</strong>. Fight me.</p>
+<div id="data-collection" class="section level2">
+<h2>Data collection</h2>
+<p>The Black Mirror <a href = "https://www.reddit.com/r/blackmirror/">subreddit</a> has a <a href = "https://www.reddit.com/r/blackmirror/comments/7ms2r8/black_mirror_episode_rankings_thread/">dedicated thread</a> for users to post their episode rankings. I manually recorded the rankings from 111 users, considering every top-level comment that provided any sequential order of episodes, only excluding posts that were clearly ranking only episodes from a limited number of seasons (often seasons 1-3, or just season 4). This includes ranks from 11 different articles as compiled by reddit user <a href = "https://www.reddit.com/r/blackmirror/comments/7ms2r8/black_mirror_episode_rankings_thread/dsadl3c/">loonwin</a>. I have made the raw recorded data availible on github <strong>link post</strong>.</p>
+<p>The data is particularly unique because many users did not make a full ranking of all 19 episodes, with some users ranking just a single episode as their favorite. This is something that could happen in an actual ranked-choice election, which brings us to the subject at hand.</p>
+</div>
+<div id="ranked-choice-voting" class="section level2">
+<h2>Ranked-choice voting</h2>
+<p>In a ranked-choice election (also called an “instant runoff” election) voters submit a ranked list of their preferred candidates. This would look like a ranking of your favorite movies, like:</p>
+<ol style="list-style-type: decimal">
+<li>Return of the Jedi<br />
+</li>
+<li>The Force Awakens<br />
+</li>
+<li>Rogue One</li>
+</ol>
+<p>The top rank for every voter is counted, and the option with the fewest top ranks is eliminated from the pool. If <em>Return of the Jedi</em> was eliminated, the ballot above would then be counted as a vote for <em>The Force Awakens</em>.</p>
+<p>But what if a voter didn’t rank every option? If all of their choices are eliminated the ballot is exhausted and will no longer be counted.</p>
+</div>
+<div id="finding-the-best-black-mirror-episode" class="section level2">
+<h2>Finding the best Black Mirror episode</h2>
+<p>So what is the best Black Mirror episode (based on 111 reddit user rankings)? Judging by most first-place votes and average rankings the clear favorite is the <em>White Christmas</em> episode starring Jon Hamm:</p>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Notably, <em>Shut Up and Dance</em> and <em>The Entire History of You</em> both recieve more 1st place votes than <em>San Junipero</em>. This is a particularly egregious miscarriage of justice as not only was <em>San Junipero</em> the winner of the Primetime Emmy for Outstanding Television Movie, it was also my personal #1 episode while <em>Shut Up and Dance</em> was 19th (reminder: there are only 19 episodes. Also <em>The Entire History of You</em> is fine, it was 7th in my list).</p>
+<p>While every episode has an incredible range of responses, <em>White Christmas</em> is so far ahead of the rest that we’re going to make a special comparison of all episodes not starring Jon Hamm to round out the top four. Sorry Jon.</p>
+<div class="figure">
+<img src="/img/HammToast.gif" />
+
+</div>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-4-1.png" width="576" /></p>
+<p>Interestingly, we still have the same top-3 after removing <em>White Christmas</em>. <em>Shut Up and Dance</em> leads with 18% of the vote, followed by <em>San Junipero</em> and <em>The Entire History of You</em> with 16.2%. No option is anywhere near a majority of the vote, and currently a terrible choice is leading the pack so this looks like a perfect place to implement ranked choice voting.</p>
+<p>So why is <em>San Junipero</em> so poorly ranked? It could be a backlash against the popularity and praise the episode has recieved, while fans of the series are more fond of lesser-known installments. It could also be that the episode is a true outlier, depicting a story that is far happier than the rest (though <em>Hang the DJ</em> is similarly heart-warming and doesn’t suffer the same penalty). Or maybe, just maybe, it might have something to do with the gender of the two primary characters? Nah</p>
+<div class="figure">
+<img src="/img/JuniperoLaugh.gif" />
+
+</div>
+<p>But ranked-choice voting will give us a window into whether <em>San Junipero</em> is not well liked among Black Mirror fans, or if the lower ranking is driven by a minority of voters.</p>
+<p>In the first round the episode with the fewest first-place votes will be eliminated, and those ballots will be reassigned based on the next highest ranked option still availible for that voter. In this case that will be four episodes (Arkangel, Crocodile, Playtest and The Waldo Moment) all recieving just one first place vote. Note that Metalhead and Men Against Fire recieved no first-place votes, and have already been eliminated.</p>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
+<p>A few things to note after the first round. The voters who ranked <em>Crocodile</em>, <em>Waldo</em>, and <em>Arkangel</em> as their favorites had their votes moved to their second-favorite episodes (<em>The Entire History of You</em> for the former two, <em>Be Right Back</em> for the latter).</p>
+<p>Also the sole voter who loved <em>Playtest</em> refused to rank any other episodes as back-up options, so their vote has been removed for all future consideration. By not ranking more than one option this voter actually <strong>reduced</strong> their ability to influence this election. Are you following?</p>
+<div class="figure">
+<img src="/img/Playtest.gif" alt="Good" />
+<p class="caption">Good</p>
+</div>
+<p>Let’s speed through a few more rounds of elimination.</p>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-6-1.png" width="960" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">episode</th>
+<th align="right">votes</th>
+<th align="right">pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">San Junipero</td>
+<td align="right">30</td>
+<td align="right">27.3</td>
+</tr>
+<tr class="even">
+<td align="left">Shut Up and Dance</td>
+<td align="right">28</td>
+<td align="right">25.5</td>
+</tr>
+<tr class="odd">
+<td align="left">The Entire History of You</td>
+<td align="right">25</td>
+<td align="right">22.7</td>
+</tr>
+<tr class="even">
+<td align="left">Fifteen Million Merits</td>
+<td align="right">16</td>
+<td align="right">14.5</td>
+</tr>
+<tr class="odd">
+<td align="left">White Bear</td>
+<td align="right">11</td>
+<td align="right">10.0</td>
+</tr>
+<tr class="even">
+<td align="left">-</td>
+<td align="right">1</td>
+<td align="right">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>So in narrowing the field of episodes down to 5 we see our first example of a strong coalition. <em>Be Right Back</em> is eliminated and well over half of those votes go to <em>San Junipero</em>, propelling it into the lead for the first time. If you’ve seen the show you’ll know that these episodes are primarily focused around a romantic relationship that is absent in most other Black Mirror episodes. So it makes sense that the users who liked <em>Be Right Back</em> also ranked <em>San Junipero</em> higher than more unnerving or non-romantic episodes like <em>Shut Up and Dance</em>, <em>White Bear</em>, or <em>Fifteen Million Merits</em>.</p>
+<p>Next round we’ll see the elimination of <em>White Bear</em> and followed by (barring a radically skewed, coalition-type redistribution) <em>Fifteen Million Merits</em>.</p>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-7-1.png" width="1248" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">episode</th>
+<th align="right">votes</th>
+<th align="right">pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">San Junipero</td>
+<td align="right">42</td>
+<td align="right">38.2</td>
+</tr>
+<tr class="even">
+<td align="left">Shut Up and Dance</td>
+<td align="right">38</td>
+<td align="right">34.5</td>
+</tr>
+<tr class="odd">
+<td align="left">The Entire History of You</td>
+<td align="right">30</td>
+<td align="right">27.3</td>
+</tr>
+<tr class="even">
+<td align="left">-</td>
+<td align="right">1</td>
+<td align="right">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>Lovers of <em>White Bear</em> broke predominantly for <em>San Junipero</em>. As a result <em>Fifteen Million Merits</em> was eliminated and those votes were split fairly evenly among the remaining three episodes. The ultimate victor will come down to the preferences of voters that have (so far) supported <em>The Entire History of You</em>, an episode that both focuses on a romantic relationship and its inevitable, destructive collapse driven by dystopic technology. So there are similarities to both of the remaining contenders.</p>
+<p><img src="/blog/2018-06-13-blackmirrorranked_files/figure-html/unnamed-chunk-8-1.png" width="1248" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">episode</th>
+<th align="right">votes</th>
+<th align="right">pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">San Junipero</td>
+<td align="right">57</td>
+<td align="right">51.8</td>
+</tr>
+<tr class="even">
+<td align="left">Shut Up and Dance</td>
+<td align="right">51</td>
+<td align="right">46.4</td>
+</tr>
+<tr class="odd">
+<td align="left">-</td>
+<td align="right">3</td>
+<td align="right">2.7</td>
+</tr>
+</tbody>
+</table>
+<p><em>San Junipero</em> picks up just over half of the votes from <em>The Entire History of You</em>, as more reddit users prefer <em>San Junipero</em> over <em>Shut Up and Dance</em>. By crossing the threshold of 50% of all (eligible) votes, we can safely declare crisis averted and <em>San Junipero</em> to be the (second) <strong>BEST Black Mirror episode of all time!</strong></p>
+<div class="figure">
+<img src="/img/SanJunipero.gif" />
+
+</div>
+<p>If you’re interested in this analysis, you can find the raw data plus code for analysis and visualizations on GitHub <strong>link</strong>. In addition, I have a separate post on this blog walking through making the Sankey diagrams using the ggalluvial package in R.</p>
+</div>

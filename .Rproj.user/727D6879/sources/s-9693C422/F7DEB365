@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1528935267200.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F7DEB365",
+    "lastKnownWriteTime" : 1529109282,
+    "last_content_update" : 1529109282156,
+    "path" : "~/R_Projects/VizBlog/content/blog/2018-06-13-blackmirrorranked.Rmd",
+    "project_path" : "content/blog/2018-06-13-blackmirrorranked.Rmd",
+    "properties" : {
+        "cursorPosition" : "362,51",
+        "scrollLine" : "350"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
